@@ -36,6 +36,7 @@ jobs:
 
     - name: Update Artalk #Artalk更新
       run: |
+        cd Artalk
         make all
         mv ./bin/artalk ../artalk.moe
         cd ..
