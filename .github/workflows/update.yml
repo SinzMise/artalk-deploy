@@ -28,7 +28,7 @@ jobs:
     - name: Clone Artalk #Artalk更新
       run: |
         git clone https://github.com/ArtalkJS/Artalk.git
-        cd Artalk
+        mv ./Artalk/go.mod ./go.mod
 
     -  name: Get go.mod details
        uses: Eun/go-mod-details@v1
