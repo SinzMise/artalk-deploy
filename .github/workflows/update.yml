@@ -25,17 +25,12 @@ jobs:
       with:
         go-version: 1.20
 
-    - name: Clone Artalk #Artalk更新
-      run: |
-        git clone https://github.com/ArtalkJS/Artalk.git
-        mv ./Artalk/go.mod ./go.mod
-
-    -  name: Get go.mod details
-       uses: Eun/go-mod-details@v1
-       id: go-mod-details
+    -  name: Get go.mod
+       uses: Jerome1337/gomod-action@v1.0.0
 
     - name: Update Artalk #Artalk更新
       run: |
+        git clone https://github.com/ArtalkJS/Artalk.git
         cd Artalk
         make all
         mv ./bin/artalk ../artalk.moe
