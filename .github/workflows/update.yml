@@ -20,6 +20,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+    -  name: Get go.mod details
+       uses: Eun/go-mod-details@v1
+       id: go-mod-details
+
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
