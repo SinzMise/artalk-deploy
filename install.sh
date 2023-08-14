@@ -1,6 +1,6 @@
 echo "Artalk一键搭建脚本"
 echo "脚本作者：王九弦SZ·Ninty"
-echo "GitHub开源地址：https://github.com/SinzMise/memos-on-replit"
+echo "GitHub开源地址：https://github.com/SinzMise/artalk-on-replit/"
 nix-env -iA nixpkgs.wget
 mkdir build
 cd build
