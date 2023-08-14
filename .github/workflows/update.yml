@@ -20,18 +20,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+    - name: Clone Artalk
+      run: git clone https://github.com/ArtalkJS/Artalk.git 
+
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: 1.20
-
-    -  name: Get go.mod
-       uses: Jerome1337/gomod-action@v1.0.0
+        go-version-file: './Artalk/go.mod'
 
     - name: Update Artalk #Artalk更新
       run: |
-        git clone https://github.com/ArtalkJS/Artalk.git
         cd Artalk
+        go help
         make all
         mv ./bin/artalk ../artalk.moe
         cd ..
