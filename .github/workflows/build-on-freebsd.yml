@@ -1,6 +1,17 @@
 name: Build Artalk-FreeBSD
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 16 */1 * *"
+  workflow_dispatch:
+
+env:
+  GITHUB_NAME: ${{ secrets.GH_NAME }} # 你的github昵称
+  GITHUB_EMAIL: ${{ secrets.GH_EMAIL }} # 你的github邮箱
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # github token
 
 jobs:
   test:
