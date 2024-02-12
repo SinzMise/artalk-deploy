@@ -15,7 +15,7 @@ else
     clear
     echo "已生成配置文件，请修改端口！"
     echo
-    echo "使用命令 vim artalk.yml 进入data路径下"
+    echo "使用命令 vim artalk.yml 修改artalk.yml文件"
     echo
     echo "将 port: 23366中的 23366 修改成你放行的端口即可"
     echo
