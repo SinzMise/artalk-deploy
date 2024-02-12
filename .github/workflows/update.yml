@@ -80,3 +80,4 @@ jobs:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         files: |
               artalk-freebsd.moe
+              artalk-repl.moe
