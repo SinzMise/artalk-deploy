@@ -1,0 +1,60 @@
+name: Build Artalk
+
+on: workflow_dispatch
+
+env:
+  GITHUB_NAME: ${{ secrets.GH_NAME }} # 你的github昵称
+  GITHUB_EMAIL: ${{ secrets.GH_EMAIL }} # 你的github邮箱
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # github token
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Build Artalk
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Clone Artalk
+      run: git clone https://github.com/ArtalkJS/Artalk.git 
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version-file: './Artalk/go.mod'
+
+    - name: Update Artalk #Artalk更新
+      run: |
+        cd Artalk
+        go help
+        make all
+        mv ./bin/artalk ../artalk-repl.moe
+        cd ..
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@main
+      with:
+        name: artalk-replit
+        path: |
+            artalk-repl.moe
+
+    - name: Generate release tag
+      id: tag
+      run: echo "release_tag=$(wget -qO- https://api.github.com/repos/ArtalkJS/Artalk/tags | gawk -F '["v]' '/name/{print "v"$5;exit}')" >> $GITHUB_OUTPUT
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        files: |
+              artalk-repl.moe
+
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: 'artalk-deploy'
+        retain_days: 1
+        keep_minimum_runs: 8
