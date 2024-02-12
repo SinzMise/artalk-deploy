@@ -1,5 +1,13 @@
-# 免费部署Artalk
-利用github action构建Artalk，然后在Serv00或者在replit中运行
+# Artalk on replit
+利用github action构建最新版本Artalk，然后在replit运行
 
-## 教程
-编写中
+## 使用教程
+1.新建一个replit项目，环境选择`Bash`或`Blank Repl`
+
+2.运行一键安装脚本：
+```
+bash <(curl -s https://github.com/SinzMise/artalk-deploy/raw/replit/install.sh)
+```
+3.点击“Run”按钮
+
+开始使用吧！
