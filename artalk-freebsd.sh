@@ -2,7 +2,7 @@
 
 API_URL="https://api.github.com/repos/SinzMise/artalk-deploy/releases/latest"
 
-DOWNLOAD_URL=$(curl -s $API_URL | jq -r ".assets[] | select(.name | contains(\"artalk-repl.moe\")) | .browser_download_url")
+DOWNLOAD_URL=$(curl -s $API_URL | jq -r ".assets[] | select(.name | contains(\"artalk-freebsd.moe\")) | .browser_download_url")
 
 curl -L $DOWNLOAD_URL -o artalk
 
