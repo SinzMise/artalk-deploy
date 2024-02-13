@@ -1,6 +1,14 @@
 name: Build Artalk-FreeBSD
 
-on: workflow_dispatch
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      dry_run:
+        required: true
+        type: boolean
 
 jobs:
   test:
@@ -8,6 +16,19 @@ jobs:
     name: Build Artalk-FreeBSD
     steps:
     - uses: actions/checkout@v4
+
+    - name: Use pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: Setup node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+        registry-url: https://registry.npmjs.org/
+        cache: 'pnpm'
+    
     - name: Build Artalk-FreeBSD
       uses: vmactions/freebsd-vm@v1
       with:
@@ -17,9 +38,14 @@ jobs:
           pkg install -y node wget curl git go121 gcc bash gawk gsed
           ln -s /usr/local/bin/go121 /usr/local/bin/go
         run: |
-          git clone https://github.com/ArtalkJS/Artalk.git Artalk
+          export LATEST_APP=$(wget -qO- https://api.github.com/repos/ArtalkJS/Artalk/tags | gawk -F '["v]' '/name/{print "v"$5;exit}')
+          git clone -b $LATEST_APP https://github.com/ArtalkJS/Artalk
           cd Artalk
-          bash ../build-freebsd.sh
+          pnpm install --frozen-lockfile
+          pnpm build
+          make all
+          mv ./bin/artalk ../artalk-freebsd.moe
+          cd ..
           
     - name: Upload artifact
       uses: actions/upload-artifact@main
