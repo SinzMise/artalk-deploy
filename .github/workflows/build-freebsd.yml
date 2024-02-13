@@ -19,16 +19,14 @@ jobs:
         run: |
           git clone https://github.com/ArtalkJS/Artalk.git Artalk
           cd Artalk
-          make all
-          mv ./bin/artalk ../artalk-freebsd.moe
-          cd ..
+          bash ../build.sh
           
     - name: Upload artifact
       uses: actions/upload-artifact@main
       with:
         name: artalk-freebsd
         path: |
-            artalk-freebsd.moe
+            Artalk/bin/artalk-freebsd.moe
 
     - name: Generate release tag
       id: tag
@@ -41,7 +39,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         files: |
-              artalk-freebsd.moe
+              Artalk/bin/artalk-freebsd.moe
               
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
