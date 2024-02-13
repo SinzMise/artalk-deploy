@@ -19,7 +19,7 @@ jobs:
         run: |
           git clone https://github.com/ArtalkJS/Artalk.git Artalk
           cd Artalk
-          bash ../build.sh
+          bash ../build-freebsd.sh
           
     - name: Upload artifact
       uses: actions/upload-artifact@main
