@@ -28,7 +28,7 @@ jobs:
       with:
         name: artalk-freebsd
         path: |
-            Artalk/bin/artalk-freebsd.moe
+            artalk-freebsd.moe
 
     - name: Generate release tag
       id: tag
@@ -41,7 +41,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         files: |
-              Artalk/bin/artalk-freebsd.moe
+              artalk-freebsd.moe
               
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
