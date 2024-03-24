@@ -9,4 +9,5 @@ go build \
     -ldflags "-s -w -X $PKG_NAME/internal/config.Version=$VERSION \
     -X $PKG_NAME/internal/config.CommitHash=$COMMIT_HASH" \
     -o $BIN_NAME \
+    -buildvcs=false \
     $PKG_NAME
