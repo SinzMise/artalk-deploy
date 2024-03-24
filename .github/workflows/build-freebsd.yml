@@ -1,6 +1,7 @@
 name: Build Artalk-FreeBSD
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       version:
