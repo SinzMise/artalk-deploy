@@ -13,6 +13,7 @@ if [ -f "./artalk.yml" ]; then
 else
     nohup ./artalk server > /dev/null 2>&1 &
     clear
+    curl -L https://github.com/lionsoul2014/ip2region/raw/master/data/ip2region.xdb -o ./data/ip2region.xdb
     echo "已生成配置文件，请修改端口！"
     echo
     echo "使用命令 vim artalk.yml 修改artalk.yml文件"
