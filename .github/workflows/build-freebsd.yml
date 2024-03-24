@@ -43,9 +43,7 @@ jobs:
           ln -s /usr/local/bin/go121 /usr/local/bin/go
         run: |
           cd Artalk
-          make all
-          mv ./bin/artalk ../artalk-freebsd.moe
-          cd ..
+          bash ../build-freebsd.sh
           
     - name: Upload artifact
       uses: actions/upload-artifact@main
