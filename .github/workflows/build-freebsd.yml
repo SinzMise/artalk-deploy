@@ -30,7 +30,7 @@ jobs:
           git clone -b $LATEST_APP https://github.com/ArtalkJS/Artalk
           cd Artalk
           npm install -g pnpm
-          make build-frontend
+          bash ./scripts/build-frontend.sh
           make all
           mv ./bin/artalk ../artalk-freebsd.moe
           cd ..
