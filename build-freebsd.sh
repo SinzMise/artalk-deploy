@@ -6,7 +6,7 @@ COMMIT_HASH=$(git rev-parse --short HEAD)
 
 go mod tidy
 go build \
-    	-ldflags "-s -w -X $PKG_NAME/internal/config.Version=$VERSION \
-        -X $PKG_NAME/internal/config.CommitHash=$COMMIT_HASH" \
-        -o $BIN_NAME \
-    	$PKG_NAME
+    -ldflags "-s -w -X $PKG_NAME/internal/config.Version=$VERSION \
+    -X $PKG_NAME/internal/config.CommitHash=$COMMIT_HASH" \
+    -o $BIN_NAME \
+    $PKG_NAME
