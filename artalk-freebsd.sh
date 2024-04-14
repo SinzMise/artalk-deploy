@@ -1,15 +1,16 @@
 #!/bin/sh
-
-API_URL="https://api.github.com/repos/SinzMise/artalk-deploy/releases/latest"
-DOWNLOAD_URL=$(curl -s $API_URL | jq -r ".assets[] | select(.name == \"Artalk-freebsd-amd64.tar.gz\") | .browser_download_url")
-curl -L $DOWNLOAD_URL -o ./data/artalk-freebsd-amd64.tar.gz
-tar -xzvf ./data/artalk-freebsd-amd64.tar.gz && cp -f ./data/artalk ./artalk && rm ./data/artalk-freebsd-amd64.tar.gz && chmod +x artalk
-
+    API_URL="https://api.github.com/repos/SinzMise/artalk-deploy/releases/latest"
+    DOWNLOAD_URL=$(curl -s $API_URL | jq -r ".assets[] | select(.name == \"Artalk-freebsd-amd64.tar.gz\") | .browser_download_url")
 if [ -f "./data/ip2region.xdb" ]; then
+    curl -L $DOWNLOAD_URL -o ./data/artalk-freebsd-amd64.tar.gz
+    cd data && tar -xzvf artalk-freebsd-amd64.tar.gz && cd .. &&  cp -f ./data/artalk ./artalk && rm ./data/artalk-freebsd-amd64.tar.gz && chmod +x artalk
     rm ./data/artalk
     rm ./data/artalk.yml
     echo "Artalk-FreeBSD最新版本已经下载覆盖完成！"
 else
+    mkdir data
+    curl -L $DOWNLOAD_URL -o ./data/artalk-freebsd-amd64.tar.gz
+    cd data && tar -xzvf artalk-freebsd-amd64.tar.gz && cp -f ./data/artalk ./artalk && rm ./data/artalk-freebsd-amd64.tar.gz && chmod +x artalk
     curl -L https://github.com/lionsoul2014/ip2region/raw/master/data/ip2region.xdb -o ./data/ip2region.xdb
     cp -f ./data/artalk.yml ./artalk.yml
     nohup ./artalk server > /dev/null 2>&1 &
