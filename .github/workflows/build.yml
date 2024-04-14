@@ -1,4 +1,4 @@
-name: Build Artalk-FreeBSD
+name: Build Artalk
 
 on:
   workflow_dispatch:
