@@ -18,39 +18,47 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Use pnpm
-      uses: pnpm/action-setup@v2
+    - name: Set up Go
+      uses: actions/setup-go@v4
       with:
-        version: 8
+        go-version: 'stable'
+        check-latest: true
 
-    - name: Setup node
+    - name: Set up Node.js
       uses: actions/setup-node@v4
+      with:
+        node-version: 20
 
-    - name: Make Artalk-Web
+    - name: Clone Repo
       run: |
-          export LATEST_APP=$(wget -qO- https://api.github.com/repos/ArtalkJS/Artalk/tags | gawk -F '["v]' '/name/{print "v"$5;exit}')
-          git clone -b $LATEST_APP https://github.com/ArtalkJS/Artalk
+        export LATEST_APP=$(wget -qO- https://api.github.com/repos/ArtalkJS/Artalk/tags | gawk -F '["v]' '/name/{print "v"$5;exit}')
+        git clone -b $LATEST_APP https://github.com/ArtalkJS/Artalk
+        npm install -g pnpm
+
+    - name: Build Frontend
+      run: |
           cd Artalk
           make build-frontend
+          cd ..
     
-    - name: Build Artalk-FreeBSD
-      uses: vmactions/freebsd-vm@v1
-      with:
-        usesh: true
-        release: 13.2
-        prepare: |
-          pkg install -y node wget curl git go121 gcc bash gawk gsed
-          ln -s /usr/local/bin/go121 /usr/local/bin/go
-        run: |
-          cd Artalk
-          bash ../build-freebsd.sh
+    - name: Build binary
+      run: |
+        cd Artalk
+        GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make all && cp conf/artalk.example.yml bin/artalk.yml && cd bin && tar -czvf ../Artalk-linux-amd64.tar.gz * && cd ..
+        GOOS=windows GOARCH=amd64 CGO_ENABLED=0 make all && cp conf/artalk.example.yml bin/artalk.yml && cd bin && tar -czvf ../Artalk-windows-amd64.tar.gz * && cd ..
+        GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 make all && cp conf/artalk.example.yml bin/artalk.yml && cd bin && tar -czvf ../Artalk-darwin-amd64.tar.gz * && cd ..
+        GOOS=freebsd GOARCH=amd64 CGO_ENABLED=0 make all && cp conf/artalk.example.yml bin/artalk.yml && cd bin && tar -czvf ../Artalk-freebsd-amd64.tar.gz * && cd ..
+        cd ..
           
     - name: Upload artifact
       uses: actions/upload-artifact@main
       with:
         name: artalk-freebsd
         path: |
-            Artalk/bin/artalk-freebsd.moe
+            Artalk/Artalk-linux-amd64.tar.gz
+            Artalk/Artalk-windows-amd64.tar.gz
+            Artalk/Artalk-darwin-amd64.tar.gz
+            Artalk/Artalk-freebsd-amd64.tar.gz
 
     - name: Generate release tag
       id: tag
@@ -63,7 +71,10 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         files: |
-              Artalk/bin/artalk-freebsd.moe
+              Artalk/Artalk-linux-amd64.tar.gz
+              Artalk/Artalk-windows-amd64.tar.gz
+              Artalk/Artalk-darwin-amd64.tar.gz
+              Artalk/Artalk-freebsd-amd64.tar.gz
               
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
