@@ -17,7 +17,7 @@ else
     rm ./artalk
     rm ./artalk.yml
     cd .. && chmod +x artalk
-    cp -f ./data/artalk.yml ./artalk.yml
+    curl -L https://github.com/lionsoul2014/ip2region/raw/master/data/ip2region.xdb -o ./data/ip2region.xdb
     nohup ./artalk server > /dev/null 2>&1 &
     clear
     echo "已生成配置文件，请修改端口！"
