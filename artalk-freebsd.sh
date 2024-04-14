@@ -3,6 +3,7 @@
     DOWNLOAD_URL=$(curl -s $API_URL | jq -r ".assets[] | select(.name == \"Artalk-freebsd-amd64.tar.gz\") | .browser_download_url")
 if [ -f "./data/ip2region.xdb" ]; then
     cd data
+    ls
     curl -L $DOWNLOAD_URL -o artalk-freebsd-amd64.tar.gz
     tar -xzvf artalk-freebsd-amd64.tar.gz
     cp -f ./artalk ../artalk
