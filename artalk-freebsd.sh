@@ -4,7 +4,7 @@
 if [ -f "./data/ip2region.xdb" ]; then
     cd data
     curl -L $DOWNLOAD_URL -o artalk-freebsd-amd64.tar.gz
-    tar -xzvf artalk-freebsd-amd64.tar.gz && cd .. &&  cp -f ./artalk ../artalk && rm artalk-freebsd-amd64.tar.gz
+    tar -xzvf artalk-freebsd-amd64.tar.gz && cp -f ./artalk ../artalk && rm artalk-freebsd-amd64.tar.gz
     rm ./artalk
     rm ./artalk.yml
     cd .. && chmod +x artalk
@@ -13,7 +13,7 @@ else
     mkdir data
     cd data
     curl -L $DOWNLOAD_URL -o artalk-freebsd-amd64.tar.gz
-    tar -xzvf artalk-freebsd-amd64.tar.gz && cd .. && cp -f ./artalk.yml ../artalk.yml && cp -f ./artalk ../artalk && rm artalk-freebsd-amd64.tar.gz
+    tar -xzvf artalk-freebsd-amd64.tar.gz && cp -f ./artalk.yml ../artalk.yml && cp -f ./artalk ../artalk && rm artalk-freebsd-amd64.tar.gz
     rm ./artalk
     rm ./artalk.yml
     cd .. && chmod +x artalk
