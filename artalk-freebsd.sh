@@ -11,6 +11,7 @@ if [ -f "./data/ip2region.xdb" ]; then
     echo "Artalk-FreeBSD最新版本已经下载覆盖完成！"
 else
     curl -L https://github.com/lionsoul2014/ip2region/raw/master/data/ip2region.xdb -o ./data/ip2region.xdb
+    cp -f ./data/artalk.yml ./artalk.yml
     nohup ./artalk server > /dev/null 2>&1 &
     rm ./data/artalk
     rm ./data/artalk.yml
