@@ -2,7 +2,7 @@
 
 API_URL="https://api.github.com/repos/SinzMise/artalk-deploy/releases/latest"
 DOWNLOAD_URL=$(curl -s $API_URL | jq -r ".assets[] | select(.name == \"Artalk-freebsd-amd64.tar.gz\") | .browser_download_url")
-curl -L $DOWNLOAD_URL -o ./bak/artalk-freebsd-amd64.tar.gz
+curl -L $DOWNLOAD_URL -o ./data/artalk-freebsd-amd64.tar.gz
 tar -xzvf ./data/artalk-freebsd-amd64.tar.gz && cp -f ./data/artalk ./artalk && rm ./data/artalk-freebsd-amd64.tar.gz && chmod +x artalk
 
 if [ -f "./data/ip2region.xdb" ]; then
